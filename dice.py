@@ -1,5 +1,4 @@
 from flask import Flask, request
-import json
 import random
 
 app = Flask(__name__)
@@ -19,4 +18,4 @@ def dices_rolling():
 def dice_rolling():
     return {"result": random.randint(1, 6)}
 
-app.run()
+app.run(host='0.0.0.0')
