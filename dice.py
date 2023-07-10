@@ -1,7 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, Response
+from prometheus_client import start_http_server, Counter
+
+import prometheus_client
 import random
 
 app = Flask(__name__)
+rolling_times = Counter('dice_rolling_times', 'Counter of dice rolling requests' )
 
 @app.route('/dices', methods=['GET'])
 def dices_rolling():
@@ -12,10 +16,16 @@ def dices_rolling():
     while dice_index < dice_numbers:
         results.append(random.randint(1, 6))
         dice_index += 1
+    rolling_times.inc()
     return {"results": results}
 
 @app.route('/', methods=['GET'])
 def dice_rolling():
+    rolling_times.inc()
     return {"result": random.randint(1, 6)}
 
-app.run(host='0.0.0.0')
+@app.route('/metrics')
+def metrics():
+    return Response(prometheus_client.generate_latest(rolling_times), mimetype="text/plain")
+
+app.run(host='0.0.0.0', port=5001)
