@@ -1,4 +1,4 @@
-FROM python:3.8.10-alpine
+FROM --platform=linux/amd64 python:3.8.10-alpine
 
 COPY dice.py requirements.txt /
 WORKDIR /
