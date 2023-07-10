@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "dice.fullname" . }}
+  labels:
+    {{- include "dice.labels" . | nindent 4 }}
+    monitoring.cat.com/prometheus: shared
+spec:
+  selector:
+    matchLabels:
+      {{- include "dice.labels" . | nindent 6 }}
+  endpoints:
+  - path: /metrics
+    port: dice
