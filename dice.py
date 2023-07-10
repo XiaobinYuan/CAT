@@ -1,5 +1,5 @@
 from flask import Flask, request, Response
-from prometheus_client import start_http_server, Counter
+from prometheus_client import Counter
 
 import prometheus_client
 import random
