@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDisableDefaultSA
+metadata:
+  name: constraints-defaultsa
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod", "ReplicationController"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "DaemonSet", "StatefulSet", "ReplicaSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    excludedNamespaces:
+      - "kube-system"
