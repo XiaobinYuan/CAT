@@ -28,4 +28,4 @@ def dice_rolling():
 def metrics():
     return Response(prometheus_client.generate_latest(rolling_times), mimetype="text/plain")
 
-app.run(host='0.0.0.0', port=5001)
+app.run(host='0.0.0.0')
